@@ -4,7 +4,7 @@ import base64
 import json
 from vertexai.generative_models import GenerativeModel
 import vertexai
-from google.oauth2 import service_account
+from google.oauth2.credentials import Credentials
 
 st.set_page_config(page_title="SVG Generator", layout="centered")
 
@@ -19,7 +19,7 @@ Return ONLY the complete SVG code, starting with <svg> and ending with </svg>. N
 
 def init_vertex_ai():
     creds_info = dict(st.secrets["google_creds"])
-    credentials = service_account.Credentials.from_service_account_info(creds_info)
+    credentials = Credentials.from_authorized_user_info(creds_info)
     project_id = creds_info["quota_project_id"]
     vertexai.init(project=project_id, location="us-central1", credentials=credentials)
 
